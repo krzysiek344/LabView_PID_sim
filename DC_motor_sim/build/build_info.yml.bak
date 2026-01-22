@@ -1,4 +1,0 @@
-west:
-  command: /home/krzysztof/zephyrproject/.venv/bin/west build -p -b nucleo_f446re
-  topdir: /home/krzysztof/zephyrproject
-  version: 1.4.0
