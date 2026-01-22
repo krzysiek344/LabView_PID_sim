@@ -1,0 +1,51 @@
+cmake:
+  application:
+    configuration-dir: '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator'
+    source-dir: '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator'
+  board:
+    name: 'nucleo_f446re'
+    path:
+     - '/home/krzysztof/zephyrproject/zephyr/boards/st/nucleo_f446re'
+    qualifiers: 'stm32f446xx'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/krzysztof/zephyrproject/zephyr/dts/bindings'
+    files:
+     - '/home/krzysztof/zephyrproject/zephyr/boards/st/nucleo_f446re/nucleo_f446re.dts'
+     - '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator/boards/nucleo_f446re.overlay'
+    include-dirs:
+     - '/home/krzysztof/zephyrproject/modules/hal/stm32/dts'
+     - '/home/krzysztof/zephyrproject/zephyr/include'
+     - '/home/krzysztof/zephyrproject/zephyr/include/zephyr'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/common'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/vendor'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/rx'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/x86'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/xtensa'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/sparc'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/riscv'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/posix'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/arm64'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/arm'
+     - '/home/krzysztof/zephyrproject/zephyr/dts/arc'
+     - '/home/krzysztof/zephyrproject/zephyr/dts'
+    user-files:
+     - '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator/boards/nucleo_f446re.overlay'
+  kconfig:
+    files:
+     - '/home/krzysztof/zephyrproject/zephyr/boards/st/nucleo_f446re/nucleo_f446re_defconfig'
+     - '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator/prj.conf'
+    user-files:
+     - '/home/krzysztof/zephyrproject/embedded-system/dc_motor_simulator/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/home/krzysztof/zephyr-sdk-0.17.2'
+  zephyr:
+    version: '4.2.0'
+    zephyr-base: '/home/krzysztof/zephyrproject/zephyr'
+version: '0.1.0'
+west:
+  command: '/home/krzysztof/zephyrproject/.venv/bin/west build -p -b nucleo_f446re'
+  topdir: '/home/krzysztof/zephyrproject'
+  version: '1.4.0'

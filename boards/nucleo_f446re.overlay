@@ -1,0 +1,12 @@
+/*
+ * Overlay for Nucleo F446RE - DC Motor Simulator
+ * Uses UART4 (PC10 TX, PC11 RX) for communication with LabVIEW
+ */
+
+&uart4 {
+	pinctrl-0 = <&uart4_tx_pc10 &uart4_rx_pc11>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
+
