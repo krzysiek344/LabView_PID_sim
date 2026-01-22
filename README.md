@@ -30,10 +30,46 @@ LabVIEW sends an integer value within the range of **-255 to 255**.
 * **0:** Stop.
 * **Format:** `[value]\n` (e.g., `150\n`, `-200\n`).
 
-> **Reset Procedure:** When the controller is stopped or reset, LabVIEW sends the sequence `0\n` **five times** (with a short delay) to ensure the motor stops safely.
+* ## Embedded Application (Zephyr RTOS)
 
-### 2. Microcontroller -> LabVIEW (Feedback)
-LabVIEW expects a data frame containing the current position.
+The embedded application runs on **STM32 Nucleo F446RE** microcontroller and simulates a DC motor with encoder for PID controller testing.
 
-* **Format:** `POS:[float_value]\n`
-* **Example:** `POS:125.50\n`
+### Architecture
+
+The application is built on **Zephyr RTOS** and consists of three main threads:
+
+1. **Simulation Thread** (Priority 5)
+   - Updates motor physics model every 10ms
+   - Calculates position based on PWM input and motor dynamics
+
+2. **Position TX Thread** (Priority 6)
+   - Sends current position via UART every 100ms
+   - Format: `POS:<position>\n` (e.g., `POS:400.0\n`)
+
+3. **Main Thread** (Priority 7)
+   - Receives PWM values from LabVIEW via UART interrupt handler
+   - Updates motor simulator with new PWM values
+   - Handles RX timeout for incomplete messages
+
+### Motor Simulation Model
+
+The simulator implements a physics-based model with inertia:
+
+- **Drive Force:** `F_drive = PWM × gain`
+- **Friction Force:** `F_friction = velocity × friction`
+- **Acceleration:** `a = (F_drive - F_friction) / mass`
+- **Velocity:** Updated based on acceleration
+- **Position:** Updated based on velocity
+
+**Key Parameters** (configurable in `src/motor_simulator.c`):
+- `gain`: PWM to force conversion (default: `0.009804f`)
+- `friction`: Friction coefficient (default: `0.5f`)
+- `mass`: Motor inertia (default: `10.0f`) - higher = more inertia
+- `max_velocity`: Maximum velocity limit (default: `5.0f`)
+- Initial position: `400.0` (range: 0-1000)
+
+### Hardware Configuration
+
+- **Board:** STM32 Nucleo F446RE
+- **UART:** UART4 (PC10 TX, PC11 RX) @ 115200 baud
+- **Communication:** Interrupt-driven UART RX, polling TX
